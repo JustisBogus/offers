@@ -1,0 +1,18 @@
+.newOfferItem {
+    display:inline-block;
+    width:100px;
+    cursor:default;
+    border-right: 1px solid #00989b;
+  
+  }
+
+  @media screen and (max-width:1200px) {
+    .newOfferItem {
+        width:70px;
+    }
+  }
+  
+  
+  .inputWrap {
+    position: relative;
+  }

@@ -1,26 +1,54 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Offers from './Containers/Offers/Offers';
+import fire from './Components/Firebase/Firebase';
+import Login from './Containers/Login/Login';
+import Spinner from './Components/Spinner/Spinner';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user:{
+
+      },
+      loading:true,
+    }
+  }
+
+componentDidMount() {
+  this.authListener();
+  document.body.style.background = "#f2f2f2";
+  document.body.style.minWidth = "1148px";
+  document.body.style.paddingRight ="15px";
+  document.title = "YNOT-Media"
+}
+
+authListener() {
+fire.auth().onAuthStateChanged((user) => {
+  if (user) {
+    this.setState({user});
+    this.setState({loading: false});
+  } else {
+    this.setState({user: null});
+    this.setState({loading: false});
+  }
+});
+}
+
   render() {
+
+    if (this.state.loading) {
+      return (
+     <Spinner/>
+      )}
+    
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+
+    { this.state.user ? (<Offers email={this.state.user.email}/>) : (<Login/>) } 
+     </div> 
     );
   }
 }
